@@ -30,7 +30,10 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://frontend-hospitality.vercel.app',
+  credentials: true
+}));
 app.use(express.json());
 
 // Define routes
