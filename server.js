@@ -29,17 +29,21 @@ connectDB();
 // Initialize app
 const app = express();
 
-// Middleware
-app.use(cors({
-  origin: ['https://frontend-hospitality.vercel.app', 'http://localhost:5173'],
-  credentials: true
-}));
+// Middleware - using your old configuration
+app.use(cors());  // Simple CORS without restrictions
 app.use(express.json());
 
-// Define routes
+// Define routes with /api/ prefix (original routes)
 app.use('/api/auth', authRoutes);
 app.use('/api/doctors', doctorRoutes);
 app.use('/api/patients', patientRoutes);
+app.use('/api/reports', reportRoutes);
+
+// Add routes without /api/ prefix for frontend compatibility
+app.use('/auth', authRoutes);
+app.use('/doctors', doctorRoutes);
+app.use('/patients', patientRoutes);
+app.use('/reports', reportRoutes);
 
 // Home route
 app.get('/', (req, res) => {

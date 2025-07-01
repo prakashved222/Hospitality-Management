@@ -20,13 +20,14 @@ const {
   requestPasswordReset,
   resetPassword,
   logoutAllDevices,
-  getDoctorReports  // Add this import
+  getDoctorReports
 } = require('../controllers/doctorController');
 
 // Public routes that don't need authentication
-router.post('/request-reset', requestPasswordReset); // No auth needed for password reset request
-router.post('/reset-password', resetPassword); // No auth needed for resetting with code
-router.get('/all', getAllDoctors); // Add this route - making it public so any doctor can see other doctors
+router.post('/request-reset', requestPasswordReset);
+router.post('/reset-password', resetPassword);
+router.get('/all', getAllDoctors);
+router.get('/department/:department', getDoctorsByDepartment);  // Keep only this one
 
 // Protected routes (doctors only)
 router.get('/profile', protect, doctorOnly, getDoctorProfile);
@@ -41,6 +42,9 @@ router.get('/referrals/received', protect, doctorOnly, getReceivedReferrals);
 router.put('/referral/:referralId/:action', protect, doctorOnly, updateReferralStatus);
 router.put('/change-password', protect, doctorOnly, changePassword);
 router.post('/logout-all', protect, doctorOnly, logoutAllDevices);
-router.get('/reports', protect, doctorOnly, getDoctorReports); // Add this route to your existing routes
+router.get('/reports', protect, doctorOnly, getDoctorReports);
+
+// Remove this duplicate line:
+// router.get('/department/:department', getDoctorsByDepartment);
 
 module.exports = router;
